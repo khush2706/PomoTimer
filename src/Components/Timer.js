@@ -73,8 +73,12 @@ const Timer = ({ clockTimer, setClockTimer }) => {
         if (clockTimer.active !== name) {
 
             // To increase the session if the user changes the mode mid-session
-            if(1){
-                //
+            if(clockTimer.active === "pomodoro" && minutes !== clockTimer.pomodoro){
+                setClockTimer({
+                    ...clockTimer,
+                    session: clockTimer.session++,
+                })
+                console.log(clockTimer);
             }
 
             setClockTimer({
