@@ -15,7 +15,7 @@ function App() {
 });
   return (
     <div className="App">
-      <Navbar />
+      <Navbar clockTimer={clockTimer} setClockTimer={setClockTimer}/>
       <Timer clockTimer={clockTimer} setClockTimer={setClockTimer} />
     </div>
   );

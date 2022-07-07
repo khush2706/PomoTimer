@@ -2,6 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { themeChange } from "theme-change";
 
 const Timer = ({ clockTimer, setClockTimer }) => {
+
+    //Update the timer settings
+    useEffect(() => {
+        setMinutes(clockTimer.pomodoro);
+        setSeconds(0);
+        setIsPaused(true);
+        pomodoroButton.current.click();
+    }, [clockTimer.pomodoro, clockTimer.short, clockTimer.long, clockTimer.longBreakInterval])
+
     const [minutes, setMinutes] = useState(clockTimer.pomodoro);
     const [isPaused, setIsPaused] = useState(true);
     const [seconds, setSeconds] = useState(0);
@@ -45,7 +54,6 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                                 ...clockTimer,
                                 session: clockTimer.session++,
                             })
-                            // console.log("inside",clockTimer.session);
                         };
                         //change the mode
                         setIsPaused(true);
@@ -73,7 +81,6 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                 ...clockTimer,
                 active: name,
             });
-            // console.log(clockTimer);
             switch (name) {
                 case "pomodoro":
                     setMinutes(clockTimer.pomodoro);
