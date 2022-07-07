@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import Navbar from './Components/Navbar';
+import Timer from './Components/Timer';
 
 function App() {
+
+  const [clockTimer, setClockTimer] = useState({
+    pomodoro: 25,
+    short: 5,
+    long: 15,
+    active: "pomodoro",
+    session: 0,
+    longBreakInterval: 4,
+});
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Timer clockTimer={clockTimer} setClockTimer={setClockTimer} />
     </div>
   );
 }
