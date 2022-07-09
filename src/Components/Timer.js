@@ -2,14 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import { themeChange } from "theme-change";
 
 const Timer = ({ clockTimer, setClockTimer }) => {
-
     //Update the timer settings
     useEffect(() => {
         setMinutes(clockTimer.pomodoro);
         setSeconds(0);
         setIsPaused(true);
         pomodoroButton.current.click();
-    }, [clockTimer.pomodoro, clockTimer.short, clockTimer.long, clockTimer.longBreakInterval])
+    }, [
+        clockTimer.pomodoro,
+        clockTimer.short,
+        clockTimer.long,
+        clockTimer.longBreakInterval,
+    ]);
 
     const [minutes, setMinutes] = useState(clockTimer.pomodoro);
     const [isPaused, setIsPaused] = useState(true);
@@ -20,18 +24,14 @@ const Timer = ({ clockTimer, setClockTimer }) => {
 
     //change the mode
     const changeMode = () => {
-
-        if(clockTimer.active==="short" || clockTimer.active==="long"){
+        if (clockTimer.active === "short" || clockTimer.active === "long") {
             pomodoroButton.current.click();
-        }
-        else if (clockTimer.session % clockTimer.longBreakInterval === 0) {
+        } else if (clockTimer.session % clockTimer.longBreakInterval === 0) {
             longButton.current.click();
-        }
-        else {
+        } else {
             shortButton.current.click();
         }
     };
-
 
     useEffect(() => {
         themeChange(false);
@@ -48,13 +48,6 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                         setSeconds(59);
                         setMinutes(minutes - 1);
                     } else {
-                        //Increase the session once timer hits 00:00
-                        if(clockTimer.active === "pomodoro"){
-                            setClockTimer({ 
-                                ...clockTimer,
-                                session: clockTimer.session++,
-                            })
-                        };
                         //change the mode
                         setIsPaused(true);
                         changeMode();
@@ -71,16 +64,6 @@ const Timer = ({ clockTimer, setClockTimer }) => {
         const { name } = e.target;
         //Condition to prevent refereshing the clock if the current mode is clicked again.
         if (clockTimer.active !== name) {
-
-            // To increase the session if the user changes the mode mid-session
-            if(clockTimer.active === "pomodoro" && minutes !== clockTimer.pomodoro){
-                setClockTimer({
-                    ...clockTimer,
-                    session: clockTimer.session++,
-                })
-                console.log(clockTimer);
-            }
-
             setClockTimer({
                 ...clockTimer,
                 active: name,
@@ -149,7 +132,18 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                 <span id="js-seconds">{seconds < 10 ? `0${seconds}` : seconds}</span>
                 <div
                     className="control_button flex items-center justify-center lg:mt-20 mt-12"
-                    onClick={() => setIsPaused(!isPaused)}
+                    onClick={() => {
+                        setIsPaused(!isPaused);
+                        // To increase the session
+                        if(clockTimer.active === "pomodoro" && minutes === clockTimer.pomodoro) {
+                            setClockTimer({
+                                ...clockTimer,
+                                session: clockTimer.session + 1,
+                            });
+                        }
+                        console.log(clockTimer);
+
+                    }}
                 >
                     {isPaused && (
                         <svg

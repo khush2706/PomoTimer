@@ -2,22 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
     overflow: hidden;
 }
 
-.clock{
-    font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+.clock {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        Liberation Mono, Courier New, monospace;
     font-size: 12rem;
 }
 
-@media(max-width: 440px) {
+.player {
+    position: relative;
+    padding-top: 38.25%;
+}
+
+.react_player {
+    position: absolute;
+    top: 2%;
+    left: 18%;
+    width: 60% !important;
+    height: 60% !important;
+}
+
+
+@media (max-width: 440px) {
     .clock {
         font-size: 6rem;
     }
 
-    .clock svg{
+    .clock svg {
         height: 65px;
         width: 65px;
+    }
+
+    .player {
+        position: relative;
+        padding-top: 38.25%;
+    }
+    
+    .react_player {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
     }
 }

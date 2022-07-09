@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-const Settings = ({ clockTimer, setClockTimer }) => {
+const Settings = ({ clockTimer, setClockTimer, exerciseTimer, setExerciseTimer }) => {
 
-    const[pomoTime, setPomoTime] = useState(25);
-    const[shortTime, setShortTime] = useState(5);
-    const[longTime, setLongTime] = useState(15);
-    const[longInterval, setLongInterval] = useState(4);
+    const [pomoTime, setPomoTime] = useState(25);
+    const [shortTime, setShortTime] = useState(5);
+    const [longTime, setLongTime] = useState(15);
+    const [longInterval, setLongInterval] = useState(4);
+    const [allowExercise, setAllowExercise] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,6 +17,15 @@ const Settings = ({ clockTimer, setClockTimer }) => {
             long: parseInt(longTime),
             longBreakInterval: parseInt(longInterval),
         });
+
+        setExerciseTimer({
+            ...exerciseTimer,
+            allow: allowExercise,
+        })
+
+        // console.log(clockTimer);
+        // console.log(exerciseTimer);
+
     }
     return (
         <div className="settings">
@@ -70,6 +80,14 @@ const Settings = ({ clockTimer, setClockTimer }) => {
                                 </label>
                                 <input type="text" required className="input input-bordered w-2/5" value={longInterval} onChange={(e) => setLongInterval(e.target.value)} />
                             </div>
+
+                            <div className="flex justify-between mt-8">
+                                <label className="label cursor-pointer">
+                                    <span className="label-text">Exercise Break</span>
+                                </label>
+                                <input type="checkbox" className="toggle" checked={allowExercise} onChange={() => setAllowExercise(!allowExercise)} />
+                            </div>
+
 
                             <button className="btn w-1/4 lg:w-1/5 btn-active relative left-3/4 bottom-2 mt-12">OK</button>
                         </form>
