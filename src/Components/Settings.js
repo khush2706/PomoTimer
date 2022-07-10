@@ -13,9 +13,8 @@ const Settings = ({
     const [longInterval, setLongInterval] = useState(4);
     const [allowExercise, setAllowExercise] = useState(false);
     const [exerciseType, setExerciseType] = useState(exerciseTimer.exerciseType);
-    const [channelId, setChannelId] = useState(exerciseTimer.channelId)
+    const [channelId, setChannelId] = useState(exerciseTimer.channelId);
     const close = useRef();
-    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,22 +33,7 @@ const Settings = ({
             channelId: channelId,
         });
 
-        console.log(clockTimer);
-        console.log(exerciseTimer);
-
         close.current.click();
-    };
-
-    const handleChange = (e) => {
-        const [option] = e.target.selectedOptions;
-        setChannelId(option.dataset.id);
-        console.log(option.dataset.id);
-    };
-
-    const updateType = (e) => {
-        const [option] = e.target.selectedOptions;
-        setExerciseType(option.dataset.name);
-        console.log(option.dataset.name);
     };
 
     return (
@@ -157,13 +141,17 @@ const Settings = ({
                                 <label className="label cursor-pointer">
                                     <span className="label-text">Exercise Type</span>
                                 </label>
-                                <select className="select select-bordered w-2/5" onChange={updateType}>
-                                    <option selected data-name="back workout">Back</option>
-                                    <option data-name="arms workout">Arms</option>
-                                    <option data-name="thighs workout">Thighs</option>
-                                    <option data-name="abs workout">Abs</option>
-                                    <option data-name="kickboxing workout">KickBoxing</option>
-                                    <option data-name="full body workout">Full Body</option>
+                                <select
+                                    className="select select-bordered w-2/5"
+                                    value={exerciseType}
+                                    onChange={(e) => setExerciseType(e.target.value)}
+                                >
+                                    <option value="back workout">Back</option>
+                                    <option value="arms workout">Arms</option>
+                                    <option value="thighs workout">Thighs</option>
+                                    <option value="abs workout">Abs</option>
+                                    <option value="kickboxing workout">KickBoxing</option>
+                                    <option value="full body workout">Full Body</option>
                                 </select>
                             </div>
 
@@ -173,18 +161,19 @@ const Settings = ({
                                 </label>
                                 <select
                                     className="select select-bordered w-2/5"
-                                    onChange={handleChange}
+                                    value={channelId}
+                                    onChange={(e) => setChannelId(e.target.value)}
                                 >
-                                    <option selected data-id="UCvGEK5_U-kLgO6-AMDPeTUQ">
-                                        Emi Wong
+                                    <option value="UCvGEK5_U-kLgO6-AMDPeTUQ">Emi Wong</option>
+                                    <option value="UCCgLoMYIyP0U56dEhEL1wXQ">Chloe Ting</option>
+                                    <option value="UCIJwWYOfsCfz6PjxbONYXSg">Blogilates</option>
+                                    <option value="UCZqvK1ix-YFuCk7w8UEHRbQ">Kpop Fitness</option>
+                                    <option value="UCBINFWq52ShSgUFEoynfSwg">
+                                        POPSUGAR Fitness
                                     </option>
-                                    <option data-id="UCCgLoMYIyP0U56dEhEL1wXQ">
-                                        Chloe Ting
+                                    <option value="UCiP6wD_tYlYLYh3agzbByWQ">
+                                        FitnessBlender
                                     </option>
-                                    <option data-id="UCIJwWYOfsCfz6PjxbONYXSg">Blogilates</option>
-                                    <option data-id="UCZqvK1ix-YFuCk7w8UEHRbQ">Kpop Fitness</option>
-                                    <option data-id="UCBINFWq52ShSgUFEoynfSwg">POPSUGAR Fitness</option>
-                                    <option data-id="UCiP6wD_tYlYLYh3agzbByWQ">FitnessBlender</option>
                                 </select>
                             </div>
 

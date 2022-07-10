@@ -191,7 +191,6 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                                 session: clockTimer.session + 1,
                             });
                         }
-                        console.log(clockTimer);
                     }}
                 >
                     {isPaused && (

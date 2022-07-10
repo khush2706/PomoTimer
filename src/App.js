@@ -65,11 +65,8 @@ function App() {
         });
         setVideosList(videoIds)
         setIndex(0)
-        console.log("ran")
       })
       .catch((error) => console.log("error", error));
-      
-    console.log("updated", videoIds);
   }, [exerciseTimer.exerciseType, exerciseTimer.channelId])
 
   return (
