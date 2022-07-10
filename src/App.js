@@ -63,6 +63,25 @@ function App() {
     console.log("updated", videoIds);
   }, [exerciseTimer.exerciseType, exerciseTimer.channelId])
 
+  useEffect(() => {
+    videoIds = [];
+    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&videoDuration=medium&type=video&q=${exerciseTimer.exerciseType}&channelId=${exerciseTimer.channelId}&key=${API_KEY}`;
+
+    fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        const items = result.items;
+        items.forEach(item => {
+          videoIds.push(item.id.videoId);
+        });
+        console.log("ran");
+        setVideosList(videoIds);
+        setIndex(0);
+      })
+      .catch((error) => console.log("error", error));
+    console.log("updated", videoIds);
+  }, [])
+
   return (
     <div className="App">
       <Navbar
