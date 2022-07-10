@@ -29,7 +29,7 @@ function App() {
 
   let videoIds = [];
 
-  const API_KEY = process.env.REACT_APP_YOUTUBE_DATA_API_KEY;
+  const API_KEY = "AIzaSyBckYBjmpJChj3NVX4GZQsLPlP7_dh0e-4";
   var myHeaders = new Headers();
   myHeaders.append("Accept", "application/json");
   var requestOptions = {
