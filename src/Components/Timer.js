@@ -75,10 +75,12 @@ const Timer = ({ clockTimer, setClockTimer }) => {
         const { name } = e.target;
         //Condition to prevent refereshing the clock if the current mode is clicked again.
         if (clockTimer.active !== name) {
-            if (
+            if(minutes === 0 && seconds === 0){
+                //
+            }
+            else if (
                 clockTimer.active === "pomodoro" &&
-                minutes !== clockTimer.pomodoro &&
-                minutes !== 0
+                minutes !== clockTimer.pomodoro
             ) {
                 if (clockTimer.sound) {
                     playPopSound.current.click();
