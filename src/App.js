@@ -6,6 +6,7 @@ import Exercise from "./Components/Exercise";
 
 function App() {
 
+  //Initialized timer settings state
   const [clockTimer, setClockTimer] = useState({
     pomodoro: 25,
     short: 5,
@@ -14,8 +15,10 @@ function App() {
     session: 0,
     longBreakInterval: 4,
     isPaused: true,
+    sound: true,
   });
 
+    //Initialized exercise settings state
   const [exerciseTimer, setExerciseTimer] = useState({
     exerciseInterval: clockTimer.longBreakInterval,
     exerciseType: "back workout",
@@ -24,11 +27,14 @@ function App() {
     channelId: "UCvGEK5_U-kLgO6-AMDPeTUQ",
   });
 
+  //Initialized list state for yt video ids
   const[videosList, setVideosList] = useState([]);
+  //index state will be used as an index to shuffle the video ids in the player
   const[index, setIndex] = useState(0);
 
   let videoIds = [];
 
+    //Request params for fetch request
   const API_KEY = "AIzaSyBckYBjmpJChj3NVX4GZQsLPlP7_dh0e-4";
   var myHeaders = new Headers();
   myHeaders.append("Accept", "application/json");
@@ -37,6 +43,7 @@ function App() {
     headers: myHeaders,
   };
 
+  //To update the exerciseInterval everytime the longBreakInterval changes.
   useEffect(() => {
     setExerciseTimer({
       ...exerciseTimer,
@@ -44,6 +51,7 @@ function App() {
     });
   }, [clockTimer.longBreakInterval]);
 
+  //Fetch request for the first time the app loads as well as whenever the exercise type or channel changes
   useEffect(() => {
     videoIds = [];
     const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&videoDuration=medium&type=video&q=${exerciseTimer.exerciseType}&channelId=${exerciseTimer.channelId}&key=${API_KEY}`;
@@ -51,36 +59,18 @@ function App() {
     fetch(url, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        const items = result.items;
+        const items = result.items
         items.forEach(item => {
-          videoIds.push(item.id.videoId);
+          videoIds.push(item.id.videoId)
         });
-        console.log("ran");
-        setVideosList(videoIds);
-        setIndex(0);
+        setVideosList(videoIds)
+        setIndex(0)
+        console.log("ran")
       })
       .catch((error) => console.log("error", error));
+      
     console.log("updated", videoIds);
   }, [exerciseTimer.exerciseType, exerciseTimer.channelId])
-
-  useEffect(() => {
-    videoIds = [];
-    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&videoDuration=medium&type=video&q=${exerciseTimer.exerciseType}&channelId=${exerciseTimer.channelId}&key=${API_KEY}`;
-
-    fetch(url, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        const items = result.items;
-        items.forEach(item => {
-          videoIds.push(item.id.videoId);
-        });
-        console.log("ran");
-        setVideosList(videoIds);
-        setIndex(0);
-      })
-      .catch((error) => console.log("error", error));
-    console.log("updated", videoIds);
-  }, [])
 
   return (
     <div className="App">

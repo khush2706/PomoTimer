@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useState } from "react";
 
 const Settings = ({
@@ -13,6 +14,7 @@ const Settings = ({
     const [allowExercise, setAllowExercise] = useState(false);
     const [exerciseType, setExerciseType] = useState(exerciseTimer.exerciseType);
     const [channelId, setChannelId] = useState(exerciseTimer.channelId)
+    const close = useRef();
     
 
     const handleSubmit = (e) => {
@@ -34,6 +36,8 @@ const Settings = ({
 
         console.log(clockTimer);
         console.log(exerciseTimer);
+
+        close.current.click();
     };
 
     const handleChange = (e) => {
@@ -77,6 +81,7 @@ const Settings = ({
                     <label
                         htmlFor="my-modal-3"
                         className="btn btn-sm btn-circle absolute right-2 top-2"
+                        ref={close}
                     >
                         ✕
                     </label>
@@ -152,7 +157,7 @@ const Settings = ({
                                 <label className="label cursor-pointer">
                                     <span className="label-text">Exercise Type</span>
                                 </label>
-                                <select class="select select-bordered w-2/5" onChange={updateType}>
+                                <select className="select select-bordered w-2/5" onChange={updateType}>
                                     <option selected data-name="back workout">Back</option>
                                     <option data-name="arms workout">Arms</option>
                                     <option data-name="thighs workout">Thighs</option>
@@ -167,7 +172,7 @@ const Settings = ({
                                     <span className="label-text">Channel</span>
                                 </label>
                                 <select
-                                    class="select select-bordered w-2/5"
+                                    className="select select-bordered w-2/5"
                                     onChange={handleChange}
                                 >
                                     <option selected data-id="UCvGEK5_U-kLgO6-AMDPeTUQ">

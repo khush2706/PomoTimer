@@ -13,6 +13,7 @@
     "react-player": "^2.10.1",
     "react-scripts": "5.0.1",
     "theme-change": "^2.1.0",
+    "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

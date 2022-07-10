@@ -4,14 +4,13 @@ import ReactPlayer from "react-player";
 
 const Exercise = ({ videosList, index, setIndex }) => {
     const changeTheme = useRef();
-    const k = index<5 ? index : 0;
+    const k = index < 5 ? index : 0;
     const [url, setUrl] = useState("");
-
 
     useEffect(() => {
         themeChange(false);
         changeTheme.current.click();
-        if(index>4) {
+        if (index > 4) {
             setIndex(0);
         } else {
             setIndex(index + 1);
@@ -29,11 +28,7 @@ const Exercise = ({ videosList, index, setIndex }) => {
             >
                 Button
             </button>
-            <ReactPlayer
-                url={url}
-                controls={true}
-                className="react_player"
-            />
+            <ReactPlayer url={url} controls={true} className="react_player" />
         </div>
     );
 };

@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { themeChange } from "theme-change";
+import useSound from "use-sound";
+import bellSound from "../Sounds/bellSound.mp3";
+import popSound from "../Sounds/popSound.mp3";
 
 const Timer = ({ clockTimer, setClockTimer }) => {
     //Update the timer settings
@@ -21,6 +24,11 @@ const Timer = ({ clockTimer, setClockTimer }) => {
     const pomodoroButton = useRef();
     const shortButton = useRef();
     const longButton = useRef();
+    const [bell] = useSound(bellSound);
+    const [pop] = useSound(popSound);
+    const playBellSound = useRef();
+    const playPopSound = useRef();
+    const [showAlert, setShowAlert] = useState(false);
 
     //change the mode
     const changeMode = () => {
@@ -49,6 +57,9 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                         setMinutes(minutes - 1);
                     } else {
                         //change the mode
+                        if (clockTimer.sound) {
+                            playBellSound.current.click();
+                        }
                         setIsPaused(true);
                         changeMode();
                     }
@@ -64,6 +75,20 @@ const Timer = ({ clockTimer, setClockTimer }) => {
         const { name } = e.target;
         //Condition to prevent refereshing the clock if the current mode is clicked again.
         if (clockTimer.active !== name) {
+            if (
+                clockTimer.active === "pomodoro" &&
+                minutes !== clockTimer.pomodoro &&
+                minutes !== 0
+            ) {
+                if (clockTimer.sound) {
+                    playPopSound.current.click();
+                }
+                setShowAlert(true);
+                setTimeout(() => {
+                    setShowAlert(false);
+                }, 2000);
+            }
+
             setClockTimer({
                 ...clockTimer,
                 active: name,
@@ -90,6 +115,26 @@ const Timer = ({ clockTimer, setClockTimer }) => {
 
     return (
         <div className="timer flex flex-col items-center w-full h-screen lg:mt-40 mt-32">
+            {showAlert && (
+                <div className="alert alert-warning shadow-lg w-3/4 absolute left-2 top-20 lg:w-1/3 lg:left-1/3 lg:top-5 ">
+                    <div>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="stroke-current flex-shrink-0 h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                            />
+                        </svg>
+                        <span>Session Skipped</span>
+                    </div>
+                </div>
+            )}
             <div className="tabs p-0 lg:p-3.5 flex items-center justify-center w-full">
                 <button
                     className={`btn btn-sm lg:w-40 mx lg:mx-11 lg:w-32 mx-2.5 text-xs lg:text-sm ${!isPaused ? "btn-disabled" : ""
@@ -135,14 +180,16 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                     onClick={() => {
                         setIsPaused(!isPaused);
                         // To increase the session when a pomodoro session starts
-                        if(clockTimer.active === "pomodoro" && minutes === clockTimer.pomodoro) {
+                        if (
+                            clockTimer.active === "pomodoro" &&
+                            minutes === clockTimer.pomodoro
+                        ) {
                             setClockTimer({
                                 ...clockTimer,
                                 session: clockTimer.session + 1,
                             });
                         }
                         console.log(clockTimer);
-
                     }}
                 >
                     {isPaused && (
@@ -156,7 +203,7 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                             strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            className="feather feather-play cursor-pointer"
+                            className="feather feather-play cursor-pointer play-button"
                         >
                             <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
@@ -179,6 +226,12 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                         </svg>
                     )}
                 </div>
+                <button className="btn invisible" ref={playBellSound} onClick={bell}>
+                    Button
+                </button>
+                <button className="btn invisible" ref={playPopSound} onClick={pop}>
+                    Button
+                </button>
             </div>
         </div>
     );
