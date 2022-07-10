@@ -5,6 +5,7 @@ import Timer from "./Components/Timer";
 import Exercise from "./Components/Exercise";
 
 function App() {
+
   const [clockTimer, setClockTimer] = useState({
     pomodoro: 25,
     short: 5,
@@ -17,19 +18,50 @@ function App() {
 
   const [exerciseTimer, setExerciseTimer] = useState({
     exerciseInterval: clockTimer.longBreakInterval,
-    exerciseType: "back",
-    duration: clockTimer.long,
+    exerciseType: "back workout",
     allow: false,
     open: false,
+    channelId: "UCvGEK5_U-kLgO6-AMDPeTUQ",
   });
+
+  const[videosList, setVideosList] = useState([]);
+  const[index, setIndex] = useState(0);
+
+  let videoIds = [];
+
+  const API_KEY = process.env.REACT_APP_YOUTUBE_DATA_API_KEY;
+  var myHeaders = new Headers();
+  myHeaders.append("Accept", "application/json");
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+  };
 
   useEffect(() => {
     setExerciseTimer({
       ...exerciseTimer,
-      duration: clockTimer.long,
       exerciseInterval: clockTimer.longBreakInterval,
     });
   }, [clockTimer.longBreakInterval]);
+
+  useEffect(() => {
+    videoIds = [];
+    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&videoDuration=medium&type=video&q=${exerciseTimer.exerciseType}&channelId=${exerciseTimer.channelId}&key=${API_KEY}`;
+
+    fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        const items = result.items;
+        items.forEach(item => {
+          videoIds.push(item.id.videoId);
+        });
+        console.log("ran");
+        setVideosList(videoIds);
+        setIndex(0);
+      })
+      .catch((error) => console.log("error", error));
+    console.log("updated", videoIds);
+  }, [exerciseTimer.exerciseType, exerciseTimer.channelId])
 
   return (
     <div className="App">
@@ -94,8 +126,9 @@ function App() {
 
       {exerciseTimer.open && (
         <Exercise
-          exerciseTimer={exerciseTimer}
-          setExerciseTimer={setExerciseTimer}
+          videosList={videosList}
+          index={index}
+          setIndex={setIndex}
         />
       )}
     </div>

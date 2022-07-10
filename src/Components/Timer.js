@@ -134,7 +134,7 @@ const Timer = ({ clockTimer, setClockTimer }) => {
                     className="control_button flex items-center justify-center lg:mt-20 mt-12"
                     onClick={() => {
                         setIsPaused(!isPaused);
-                        // To increase the session
+                        // To increase the session when a pomodoro session starts
                         if(clockTimer.active === "pomodoro" && minutes === clockTimer.pomodoro) {
                             setClockTimer({
                                 ...clockTimer,

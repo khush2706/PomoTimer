@@ -1,13 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { themeChange } from "theme-change";
 import ReactPlayer from "react-player";
 
-const Exercise = ({exerciseTimer, setExerciseTimer}) => {
+const Exercise = ({ videosList, index, setIndex }) => {
     const changeTheme = useRef();
+    const k = index<5 ? index : 0;
+    const [url, setUrl] = useState("");
+
 
     useEffect(() => {
         themeChange(false);
         changeTheme.current.click();
+        if(index>4) {
+            setIndex(0);
+        } else {
+            setIndex(index + 1);
+        }
+        setUrl(`https://www.youtube.com/watch?v=${videosList[k]}`);
     }, []);
 
     return (
@@ -21,7 +30,7 @@ const Exercise = ({exerciseTimer, setExerciseTimer}) => {
                 Button
             </button>
             <ReactPlayer
-                url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                url={url}
                 controls={true}
                 className="react_player"
             />
