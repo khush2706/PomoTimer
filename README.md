@@ -29,8 +29,8 @@ Since a past couple of months I was so preoccupied with my college life that I w
 ## ✨ Features
 
 - **Beautiful UI**. The app has a minimalistic and intuitive UI making it pleasing to the eyes and easy to use.
-- **Customizable rules**. You can easily modify the default rules of Pomodoro Principle to be fitted on your personal needs and likings.
-- **Sound Notifications**. If enbaled, the app will notify you when a session completes. Useful when you are away from your computer while taking some break.
+- **Customizable rules**. You can easily modify the default rules of the Pomodoro Principle to be fitted on your personal needs and likings.
+- **Sound Notifications**. If enabled, the app will notify you when a session completes. Useful when you are away from your computer while taking a break.
 - **Customized Exercise Recommendations**. If enabled, the app will provide you customised exercise videos based on your preferences at every long break.
 - **Open-Source**. PomoTimer is an open-source project. Feel free to create pull requestes for any new features or updates.🌱
 
