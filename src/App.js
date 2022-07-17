@@ -35,7 +35,7 @@ function App() {
   let videoIds = [];
 
     //Request params for fetch request
-  const API_KEY = "AIzaSyBckYBjmpJChj3NVX4GZQsLPlP7_dh0e-4";
+  const API_KEY = process.env.REACT_APP_API_KEY;
   var myHeaders = new Headers();
   myHeaders.append("Accept", "application/json");
   var requestOptions = {
