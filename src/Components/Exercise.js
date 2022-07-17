@@ -10,7 +10,7 @@ const Exercise = ({ videosList, index, setIndex }) => {
     useEffect(() => {
         themeChange(false);
         changeTheme.current.click();
-        if (index > 4) {
+        if (index >= 4) {
             setIndex(0);
         } else {
             setIndex(index + 1);
