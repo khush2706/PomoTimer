@@ -69,7 +69,7 @@ Before setting up the project make sure the LTS (Long Term Support) version of N
   
   - **Website Blocker**. Enable user to block specific website while working in order to stay on focus.
   - **Time extender**. Enable user to extend timer if needed. Useful when the user wants to finish the task first before taking up a break.
-  - **Tasks database**. Enable user to save completed tasks into a database. Useful when the user wants to monitor or track previews tasks.
+  - **Tasks database**. Enable user to save completed tasks into a database. Useful when the user wants to monitor or track previous tasks.
   - **Productivity report**. Provide some useful summary about user's productivity to have some sense of accomplishments.
 
 ## License
